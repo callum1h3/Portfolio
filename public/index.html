@@ -1,24 +1,62 @@
 <html lang="en">
   <head>
+    <script src="./libs/jquery.js"></script>
 		<style>
       @font-face { font-family: FiraCode-Bold; src: url('./fonts/FiraCode-Bold.ttf'); } 
       @font-face { font-family: FiraCode-Medium; src: url('./fonts/FiraCode-Medium.ttf'); } 
       @font-face { font-family: Threat; src: url('./fonts/Threat.otf'); } 
       @font-face { font-family: TheNextFont; src: url('./fonts/TheNextFont.ttf'); } 
 
-			body { margin: 0; }
+			body { 
+        background-color: #1c1c1c00;
+        margin: 0; 
+        
+      }
         
       .blob {
-          position: absolute;
-          width: 100%;
-          height: 100%;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+      }
+
+      #overlay {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background: rgb(19, 19, 19);
+        z-index: 10;
+        opacity: 1;
+        pointer-events: none; 
+        
+      }
+
+      #myProgress {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        width: 30%;
+        background-color: rgb(78, 78, 78);
+        pointer-events: none; 
+      }
+
+      #myBar {
+        width: 1%;
+        height: 5px;
+        background-color: rgb(255, 255, 255);
+        pointer-events: none; 
       }
 
       .header {
-        overflow: hidden;
-        background-color: #8e8e8e17;
-        padding: 10px 10px;
-        font-family: FiraCode-Bold;
+        overflow: auto ;
+        backdrop-filter: blur(8px);
+        background-color: #1c1c1ccd;
+        font-family: FiraCode-Medium;
       }
 
       .header a {
@@ -42,8 +80,23 @@
         float: right;
       }
 
+      .iFrameName {
+        overflow: auto ; 
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        box-sizing: border-box;
+        left: 0;
+        top: 0;
+        border:none;
+        pointer-events: none; 
+        background-color: rgba(0, 0, 0, 0);
+        
+      }
+
       .headerbtn {
-        text-align: center;
+        text-align: right;
         padding: 12px;
         background-color:rgba(0, 0, 0, 0);
         color: rgb(255, 255, 255);
@@ -72,6 +125,14 @@
         transform-origin: bottom left;
       }
 
+      #gameCanvas {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+      }
+
 		</style>
     <meta charset="utf-8" />
     <title>Callum Macmillan</title>
@@ -79,8 +140,23 @@
     <script src="webgl.js" type="module"></script>
   </head>
 
+  
+  
   <body>
+    <div id='overlay'>
+      <div id="myProgress">
+        <div id="myBar"></div>
+      </div>
+    </div>
+
+    
+    <div id='gameCanvas'></div>
+
+    
+
     <div class="blob">
+      
+      <iframe class="iFrameName" src="" marginheight=0 marginwidth=0 allowtransparency="true" frameBorder="0" scrolling="no"></iframe>
 
       <div class="header">
         <a class="logo">Callum Macmillan - Games Programmer</a>
@@ -92,7 +168,8 @@
         </div>
       </div>
     </div>
-    
+
     
   </body>
 </html>
+
