@@ -219,6 +219,7 @@ class HobbiesIntrests extends SceneContainer
             this.RegisterItem("Dumbell", 'Dumbbell', "A dumbbell which shows my love for the gym, touching grass is important every once in a while.", 0.3);
 
             this.SetIntro(true);
+            this.manager.EnableIFramePointerEvents();
 
             //this.onFinishIntroSequence();
         }
@@ -239,9 +240,7 @@ class HobbiesIntrests extends SceneContainer
             self.SetSubtitles("What are you standing there for? Come closer...", function() {
                 self.SetSubtitles("Welcome to Callum's corner, you can interact with any of the highlighted items!", function() {
                     self.SetSubtitles("These items links towards Callum's hobbies and intrests.", function() {
-                        self.SetSubtitles("I don't know why I work in a store that doesn't sell anything ;(", function() {
                 
-                        });                  
                     });                    
                 });                
             });

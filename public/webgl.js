@@ -2,6 +2,13 @@ import * as THREE from "./three.module.js";
 
 import { SceneManager } from './SceneManager.js'
 import { HobbiesIntrests } from './scenes/HobbiesIntrests.js'
+import { Projects } from './scenes/Projects.js'
+
+import { EffectComposer } from './jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from './jsm/postprocessing/RenderPass.js';
+import { OutputPass } from './jsm/postprocessing/OutputPass.js';
+import { SMAAPass } from './jsm/postprocessing/SMAAPass.js';
+import { OutlinePass } from './jsm/postprocessing/OutlinePass.js';
 
 //import { FlyControls } from './jsm/controls/FlyControls.js';
 
@@ -18,7 +25,7 @@ function lerp (start, end, amt){
 function init()
 {
 	const width = window.innerWidth, height = window.innerHeight;
-	const camera = new THREE.PerspectiveCamera( 90, width / height, 0.01, 40 );
+	const camera = new THREE.PerspectiveCamera( 90, width / height, 0.01, 2000 );
 
 	const raycaster = new THREE.Raycaster();
 	const pointer = new THREE.Vector2();
@@ -34,7 +41,6 @@ function init()
 	
 	
 	const scene = new THREE.Scene();
-	scene.add(new THREE.AxesHelper(5))
 	
 	const renderer = new THREE.WebGLRenderer( { antialias: true } );
 	renderer.setSize( width, height );
@@ -45,38 +51,17 @@ function init()
 	renderer.outputEncoding = THREE.sRGBEncoding;
 	renderer.toneMapping = THREE.ACESFilmicToneMapping;
 
-	//const renderTarget = new THREE.WebGLMultisampleRenderTargets( width, height, THREE.RGBFormat );
-
-	//const composer = new EffectComposer( renderer );
-
-	//const renderPass = new RenderPass( scene, camera );
-	//composer.addPass( renderPass );
-
-	//const bloomPass = new UnrealBloomPass(
-	//	new THREE.Vector2(width, height),
-	//	0.8,
-	//	1.0,
-	//	0.2
-	//);
-	//composer.addPass(bloomPass);
-
-
-	//const smaaPass = new SMAAPass(width, height);
-	//composer.addPass( smaaPass );
-
-	//const outputPass = new OutputPass();
-	//composer.addPass( outputPass );
-	
 	const sceneManager = new SceneManager(scene, camera);
 	sceneManager.screenW = width;
 	sceneManager.screenH = height;
 	
 	// animation
-	
-	window.addEventListener( 'resize', onWindowResize, false );
-	window.addEventListener( 'pointermove', onPointerMove );
-	window.addEventListener( 'keypress', onKeypress );
-	window.addEventListener( 'wheel', onWheelEvent );
+	var iframe = document.getElementsByClassName('iFrameName')[0];
+
+	document.body.addEventListener( 'resize', onWindowResize, false );
+	document.body.addEventListener( 'pointermove', onPointerMove, false);
+	document.body.addEventListener( 'keypress', onKeypress );
+	document.body.addEventListener( 'wheel', onWheelEvent );
 
 	function onWheelEvent(wheel)
 	{
@@ -93,11 +78,12 @@ function init()
 		camera.updateProjectionMatrix();
 		sceneManager.screenW = window.innerWidth;
 		sceneManager.screenH = window.innerHeight;
-
-		//smaaPass.setSize(window.innerWidth, window.innerHeight);
-		//bloomPass.setSize(window.innerWidth, window.innerHeight);
+		sceneManager.OnResize();
+		
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		UpdateFOV();
+
+		
 	}
 
 	function onPointerMove( event ) {
@@ -107,7 +93,7 @@ function init()
 	
 		pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 		pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-		
+		console.log(pointer);
 		sceneManager.onPointerMove(pointer);
 	}
 
@@ -175,7 +161,10 @@ function init()
 		//composer.render(deltaTime);
 	}
 
-	sceneManager.ChangeScene(new HobbiesIntrests());
+	document.getElementById("btnHobbies").onclick = function() { sceneManager.ChangeScene(new HobbiesIntrests()); }
+	document.getElementById("btnProjects").onclick = function() { sceneManager.ChangeScene(new Projects()); }
+	
+	sceneManager.ChangeScene(new Projects());
 }
 
 init();

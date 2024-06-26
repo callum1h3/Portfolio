@@ -67,6 +67,11 @@ class SceneContainer
 
         }
 
+        this.OnResize = function(screenW, screenH)
+        {
+
+        }
+
         this.onWheelEvent = function(wheel)
         {
 
@@ -104,6 +109,7 @@ class SceneManager
         this.new_scene = null;
         this.isLocked = false;
         this.targetTranspancy = 0;
+        this.currentTranspancy = 0;
 
         this.loadTarget = 0;
         this.loadCurrent = 0;
@@ -149,6 +155,8 @@ class SceneManager
                 this.scene = null;
             }
 
+            this.THREE_SCENE.clear();
+
             this.scene = this.new_scene;
             this.new_scene = null;
  
@@ -170,13 +178,8 @@ class SceneManager
         this.LoadingSequence = function()
         {
             const sceneManager = this;
-
-            //this.ClearScene();
-            
-            var loader = new THREE.ObjectLoader();
-            // TODO : input yout exported json file
-            var url = '../';
-            loader.load("./unityscenes/"+sceneManager.scene.GetSceneName()+"/scene.json", 
+     
+            this.LoadScene(sceneManager.scene.GetSceneName(), 
                 function(obj) {
                     sceneManager.setupScene(obj);
                     sceneManager.LoadEnd();
@@ -187,13 +190,25 @@ class SceneManager
                     var percentage = (xhr.loaded / xhr.total * 100);
                     console.log( percentage + '% loaded' );
                     sceneManager.SetLoadingPercent(percentage);
+                }
+            );
+        }
+
+        this.LoadScene = function(name, oncomplete, onpercent)
+        {
+            var self = this;
+            this.THREE_SCENE.clear();
+            var loader = new THREE.ObjectLoader();
+
+            loader.load("./unityscenes/"+name+"/scene.json", 
+                function(obj) {
+                    self.THREE_SCENE.add( obj );
+                    oncomplete(obj)
+                },
+                function ( xhr ) {
+                    onpercent(xhr);
                 },  
             );
-            
-
-            //document.getElementsByClassName("customUI").innerHTML = "<script>alert('I am John in an annoying alert!')</script>";
-
-
         }
 
         this.ObjectDebug = function(child)
@@ -274,15 +289,13 @@ class SceneManager
         this.setupScene = function(result) 
         {
             var camera = this.findByUserData(result, "tag", "MainCamera");
-
+     
             if (camera)
             {
                 this.cameraSetPosition(camera.position.x, camera.position.y, camera.position.z);
                 this.cameraSetAngles(-camera.rotation.x, -camera.rotation.y, camera.rotation.z);
                 this.THREE_CAMERA.fov = camera.fov;
-            }
-            this.THREE_SCENE.add( result );
-                
+            }    
         }
 
         this.onPointerDown = function()
@@ -310,11 +323,27 @@ class SceneManager
             iframe.onload = function() {
                 self.OnIframeLoad();
             };
-
             this.isWaitingForLoading = false;
             this.scene.Initialize(this);
-            this.SetFadeOut();
-            this.isLocked = false;
+            this.scene.OnResize(this.screenW, this.screenH);
+            this.scene.hasLoaded = true;
+
+            setTimeout(function() {
+                self.SetFadeOut();
+                self.isLocked = false;
+            }, 1000);
+        }
+
+        this.EnableIFramePointerEvents = function()
+        {
+            var iframe = document.getElementsByClassName('iFrameName')[0];
+            iframe.style.pointerEvents = "all";
+        }
+
+        this.DisableIFramePointerEvents = function()
+        {
+            var iframe = document.getElementsByClassName('iFrameName')[0];
+            iframe.style.pointerEvents = "none";
         }
 
         this.HasLoadedEverything =  function()
@@ -330,22 +359,28 @@ class SceneManager
             this.SetLoadingPercent(percent);
         }
 
-        this.WaitForOpaque = function()
-        {
-            return this.IsTranspancyAtTarget(1.0);
-        }
-
         this.onPointerMove = function(normalized)
         {
             if (this.scene != null)
                 this.scene.onPointerMove(normalized);
         }
 
+        this.OnResize = function()
+        {
+            if (this.scene != null)
+                this.scene.OnResize(this.screenW, this.screenH);
+        }
+
         this.Update = function(deltatime, time)
         {
             if (this.isWaitingForOpaque)
-                if (this.WaitForOpaque())
+                if (this.IsTranspancyAtTarget())
                     this.__ChangeScene();
+
+            this.currentTranspancy = lerp(this.currentTranspancy, this.targetTranspancy, deltatime * 8);
+
+            var elem = document.getElementById("overlay");
+            elem.style.opacity = this.currentTranspancy;
 
             var speed = deltatime * 2;
             var roty = (Math.sin(time) * 0.005);
@@ -363,36 +398,33 @@ class SceneManager
             this.THREE_CAMERA.rotation.set(this.CAMERA_ROT_X, this.CAMERA_ROT_Y, this.CAMERA_ROT_Z);
 
             if (this.scene != null)
-                this.scene.Update(this, deltatime, time);
+                if (this.scene.hasLoaded)
+                    this.scene.Update(this, deltatime, time);
         }
 
         this.SetFadeIn = function()
         {
-            $("#overlay").fadeIn(1000,"linear");
+            //$("#overlay").fadeIn(1000,"linear");
+            this.targetTranspancy = 1;
         }
 
         this.SetFadeOut = function()
         {
-            $("#overlay").delay(600).fadeOut(1000,"linear");
+            //$("#overlay").delay(600).fadeOut(1000,"linear");
+            this.targetTranspancy = 0;
         }
 
 
-        this.IsTranspancyAtTarget = function(target)
+        this.IsTranspancyAtTarget = function()
         {
-            return Math.abs(this.GetLoadingTranspancy() - this.targetTranspancy) < 0.01;
+            return Math.abs(this.currentTranspancy - this.targetTranspancy) < 0.02;
         }
 
         this.SetLoadingPercent = function(percent)
         {
             var elem = document.getElementById("myBar");
             elem.style.width = percent + "%";
-        }
-
-        this.GetLoadingTranspancy = function()
-        {
-            var elem = document.getElementById("overlay");
-            return elem.style.opacity;
-        }    
+        } 
     }
 }
 
