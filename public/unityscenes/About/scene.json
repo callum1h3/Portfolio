@@ -1,0 +1,80 @@
+{
+    "metadata": {
+        "version": 4.5,
+        "type": "Object",
+        "generator": "ObjectExporter"
+    },
+    "geometries": [],
+    "materials": [],
+    "images": [],
+    "textures": [],
+    "object": {
+        "uuid": "89dfbcd4-204d-4c91-a25f-01ed87820ab3",
+        "type": "Scene",
+        "matrix": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+        ],
+        "children": [
+            {
+                "uuid": "577bb16a-edcb-423d-8596-b002d9b48b7d",
+                "name": "Main Camera",
+                "type": "Object3D",
+                "matrix": [
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    -1.0,
+                    0.0,
+                    0.0,
+                    1.0,
+                    10.0,
+                    1.0
+                ],
+                "userData": {
+                    "tag": "MainCamera"
+                },
+                "geometry": "",
+                "material": "",
+                "color": 0,
+                "intensity": 0.0,
+                "angle": 0.0
+            },
+            {
+                "uuid": "0749797b-0e5a-42d5-b2db-e82d58c4e544",
+                "name": "Ambient Light",
+                "type": "AmbientLight",
+                "matrix": [],
+                "userData": {
+                    "tag": ""
+                },
+                "geometry": "",
+                "material": "",
+                "color": 3553602,
+                "intensity": 1.0,
+                "angle": 0.0
+            }
+        ]
+    }
+}

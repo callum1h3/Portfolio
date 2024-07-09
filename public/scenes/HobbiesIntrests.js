@@ -216,7 +216,8 @@ class HobbiesIntrests extends SceneContainer
             }); 
 
             this.RegisterItem("Bear Detector", '"Bear" detector', "The bear detector, an item from my favorite game series, 'S.T.A.L.K.E.R'. It's name is an anomaly itself. ", 16);
-            this.RegisterItem("Dumbell", 'Dumbbell', "A dumbbell which shows my love for the gym, touching grass is important every once in a while.", 0.3);
+            this.RegisterItem("Dumbell", 'Gym', "I enjoy going to the gym, and cycling as I like to keep fit. ", 0.3);
+            this.RegisterItem("asval", 'Airsoft', "I enjoy airsoft, which is a team sport simular to paintball. I've been taking part in it for four years and have made some good friends during that time. ", 4);
 
             this.SetIntro(true);
             this.manager.EnableIFramePointerEvents();

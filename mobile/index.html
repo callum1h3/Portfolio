@@ -1,0 +1,47 @@
+<!DOCTYPE html> 
+
+<style>  
+    @font-face { font-family: FiraCode-Medium; src: url('../../fonts/FiraCode-Medium.ttf'); } 
+
+    body  {
+        background-color: #141414;
+    } 
+
+    #warning
+    {
+        font-family: FiraCode-Medium;
+        color: red;
+    }
+
+    #text
+    {
+        font-family: FiraCode-Medium;
+        color: white;       
+    }
+
+    
+</style>
+
+
+<html>
+    <p id="warning">WARNING this page is the mobile version of the desktop website and is missing alot of the WebGL features that makes the website look nice. If this is a mistake please press the "To Desktop" button if this is a mistake.</p>
+    <button onclick="ToDesktop()">To Desktop</button>
+    <p id="text">Hello I'm Callum Macmillan a Game Developer!</p>
+    <p id="text">I am a self-taught programmer that studied at University of Winchester!<br>I have been programming for 8 years on various projects while progressing in my education.<br><br>I work on games mainly in the Unity Engine and love programming for graphics apis such as OpenGL.<br><br>Skills:<br>- C++<br>- C#<br>- Java<br>- Lua<br>- OpenGL<br>- Unity<br>- Networking</p>
+    <p id="text"><br>Projects<br></p>
+    <p id="text">SCP Game ----- This game is currently being worked on by me and two other friends since June 2023. We needed a long term project to help develop our skills further so we decided to make a game in the SCP universe based on other popular games such as Containment Breach however with a focus on the multiplayer aspect. I am the only programmer on this project so I was tasked with developing frameworks to intregrate all of the ideas that we want to put into the game.<br><br>So far we have been working on it for around a year and we have many features such as P2P Multiplayer (SteamNetworkingSockets), Level Streaming (Room System), Networked Entity System (Links with Level Streaming), A* Node-Based Pathfinding, Event System, Entity Interaction Framework and much more!<br>https://www.youtube.com/watch?v=46xvM4fzjNw</p>
+</html>
+
+<script src="./libs/jquery.js"></script>
+
+<script>
+    
+    function ToDesktop()
+    {
+        console.log("switching to desktop.");
+        window.sessionStorage.setItem( 'forcedesktop', true );
+        document.location.href = '../';
+
+        
+    }
+</script>

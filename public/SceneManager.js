@@ -321,17 +321,20 @@ class SceneManager
             var iframe = document.getElementsByClassName('iFrameName')[0];
             iframe.src = "./unityscenes/"+this.scene.GetSceneName()+"/page.html?transparent=0";
             iframe.onload = function() {
-                self.OnIframeLoad();
-            };
-            this.isWaitingForLoading = false;
-            this.scene.Initialize(this);
-            this.scene.OnResize(this.screenW, this.screenH);
-            this.scene.hasLoaded = true;
+                //self.OnIframeLoad();
 
-            setTimeout(function() {
-                self.SetFadeOut();
-                self.isLocked = false;
-            }, 1000);
+                self.isWaitingForLoading = false;
+                self.scene.Initialize(self);
+                self.scene.OnIFrameLoad();
+                self.scene.OnResize(self.screenW, self.screenH);
+                self.scene.hasLoaded = true;
+    
+                setTimeout(function() {
+                    self.SetFadeOut();
+                    self.isLocked = false;
+                }, 1000);
+            };
+
         }
 
         this.EnableIFramePointerEvents = function()

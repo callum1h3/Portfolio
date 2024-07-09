@@ -1,0 +1,135 @@
+<!DOCTYPE html> 
+
+<style> 
+	@font-face { font-family: FiraCode-Medium; src: url('../../fonts/FiraCode-Medium.ttf'); } 
+
+	body {
+		background-color: #151515;
+		height: 100vh;
+	}
+
+	#nametitle
+	{
+		float: left;
+		margin: 20px;
+		font-family: FiraCode-Medium;
+       
+	}
+
+	#titlelarge
+	{
+		font-size: 38px;
+		font-family: FiraCode-Medium;
+		color: white;
+	}
+
+	#titlesmall
+	{
+		font-size: 24px;
+		font-family: FiraCode-Medium;
+		color: rgb(201, 201, 201);
+	}
+
+	#titlesub
+	{
+		font-size: 18px;
+		font-family: FiraCode-Medium;
+		color: rgb(181, 181, 181);
+	}
+
+	#profile
+	{
+		right: 0;
+		up: 0;
+		display: block;
+		width : auto;
+    	height: 100%; 
+		display: block;
+  		margin-left: auto;
+  		margin-right: 0;
+		z-index: -1;
+		
+	}
+
+	#page1 {
+		position:absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+    }
+
+	#page1header
+	{
+		display: flex;
+		position:absolute;
+        overflow: auto;
+		height: auto;
+		transform:translate(0, -50%);
+		width: 100%;
+		top: 50%;
+		margin: 40px;
+        background-color: transparent;
+	}
+
+    #downbtn
+    {
+		position:absolute;
+		left:50%;
+		bottom:0;
+        width: 75px;
+        height: 50px;
+        cursor:pointer;
+        transition: all 0.15s;
+    }
+    #downbtn:hover
+    {
+        opacity: 0.8;
+    }
+    #downbtn:active 
+    {
+        transform: scale(0.8) translate(0, 0);
+    }
+
+	#githubicon
+	{
+		position: absolute;
+		width: 40px;
+		height: 40px;
+		cursor:pointer;
+		bottom: 20px;
+		margin-left: 20px;
+	}
+
+	#linkedinicon
+	{
+		position: absolute;
+		width: 40px;
+		height: 40px;
+		cursor:pointer;
+		bottom: 20px;
+		margin-left: 65px;
+	}
+
+</style>
+
+<html> 
+	<div id="page1">
+		<div id="page1header">
+			<h1 id="nametitle">
+				<span id="titlelarge">Hello, I'm Callum Macmillan a Game Developer.</span>
+				<span id="titlesub"><br><em>I started as a self-taught programmer that continued to gain a Bachelor's Degree in Computer Science at University of Winchester.<br>I have been programing for a total of 8 years and have completed various projects that I have been working on whilst progressing my education.<br><br>My specialisation is games design mainly using the Unity Engine, and<br>I have a passion for programming for graphics APIs such as OpenGL.<br>My main skills are:<br>- C++<br>- C#<br>- Java<br>- Lua<br>- OpenGL<br>- Unity<br>- Networking</em></span>
+			</h1>	
+			
+			
+		</div>
+		<img onclick="window.open('https://github.com/callum1h3', '_blank').focus();" id="githubicon" src="../../images/github.png">
+		<img onclick="window.open('https://www.linkedin.com/in/callum-macmillan-80a747317/', '_blank').focus();" id="linkedinicon" src="../../images/linkedin.webp">
+		<img id="profile" src="../../images/profilepic.png">	
+	</div>
+
+	<div id="page2">
+
+	</div>
+	
+</html> 
